@@ -32,15 +32,36 @@ const Index = () => {
   };
 
   const tabs = [
-    { id: "prospect", label: "Prospect & Périmètre", icon: Building2 },
-    { id: "interventions", label: "Interventions", icon: Wrench },
-    { id: "facturation", label: "Facturation", icon: Receipt },
-    { id: "achats", label: "Achats & Matières", icon: Package },
-    { id: "resultats", label: "Résultats", icon: BarChart3 },
+    { id: "prospect",      label: "Prospect & Périmètre", icon: Building2 },
+    { id: "interventions", label: "Interventions",         icon: Wrench    },
+    { id: "facturation",   label: "Facturation",           icon: Receipt   },
+    { id: "achats",        label: "Achats & Matières",     icon: Package   },
+    { id: "resultats",     label: "Résultats",             icon: BarChart3 },
   ];
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-background">
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: "hsl(175, 15%, 2%)" }}>
+
+      {/* Ambient orbs — hidden on mobile */}
+      <div
+        className="hidden md:block fixed pointer-events-none blur-[120px] z-0 rounded-full"
+        style={{
+          width: 384, height: 384,
+          left: "8rem", top: "33%",
+          background: "radial-gradient(circle, rgba(22,163,74,0.18) 0%, transparent 70%)",
+          animation: "orb-drift 11s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="hidden md:block fixed pointer-events-none blur-[120px] z-0 rounded-full"
+        style={{
+          width: 384, height: 384,
+          right: "8rem", bottom: "25%",
+          background: "radial-gradient(circle, rgba(22,163,74,0.14) 0%, transparent 70%)",
+          animation: "orb-drift-reverse 13s ease-in-out infinite",
+        }}
+      />
+
       <AppHeader
         kpis={sim.kpis}
         settings={sim.settings}
@@ -53,25 +74,46 @@ const Index = () => {
       />
       <LeadMagnetBanner />
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative z-10">
         <main className="flex-1 overflow-hidden flex flex-col">
-          {/* Tab navigation as horizontal strip */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
-            <div className="border-b bg-card px-6 shadow-sm">
-              <TabsList className="h-11 bg-transparent p-0 gap-1">
+
+            {/* Tab navigation strip */}
+            <div
+              className="px-4 lg:px-6 flex-shrink-0"
+              style={{
+                background: "rgba(24,43,22,0.6)",
+                backdropFilter: "blur(8px)",
+                borderBottom: "1px solid rgba(34,197,94,0.12)",
+              }}
+            >
+              <TabsList
+                className="h-11 bg-transparent p-0 gap-0.5"
+              >
                 {tabs.map((tab) => (
                   <TabsTrigger
                     key={tab.id}
                     value={tab.id}
-                    className="custom-tab relative h-11 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-4 gap-2 text-sm font-medium text-muted-foreground data-[state=active]:text-primary transition-colors"
+                    className="
+                      custom-tab relative h-11 rounded-none px-4 gap-2 text-[13px] font-medium
+                      border-b-2 border-transparent
+                      text-white/40 hover:text-white/80
+                      data-[state=active]:border-green-500 data-[state=active]:text-green-400
+                      data-[state=active]:bg-transparent data-[state=active]:shadow-none
+                      transition-colors duration-150
+                    "
                   >
-                    <tab.icon className="h-3.5 w-3.5" />
+                    <tab.icon
+                      className="h-3.5 w-3.5"
+                      style={{ color: activeTab === tab.id ? "#4ade80" : undefined }}
+                    />
                     <span className="hidden sm:inline">{tab.label}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>
             </div>
 
+            {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto">
               <div className="p-6 max-w-5xl mx-auto animate-fade-in">
                 <TabsContent value="prospect" className="mt-0">

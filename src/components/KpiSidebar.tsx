@@ -2,7 +2,6 @@ import { formatCurrency, formatPercentage, getMarginColor } from "@/utils/calcul
 import type { KPIData, GlobalSettings, TimeScale } from "@/types/simulation";
 import { getTimeScaleMultiplier, getTimeScaleSuffix } from "@/types/simulation";
 import { TrendingUp, TrendingDown, Target, DollarSign, BarChart3, Percent, Zap, Wrench, Package, Users, Layers } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface KpiSidebarProps {
@@ -23,14 +22,43 @@ function KpiItem({ label, value, icon: Icon, tooltip, colorClass, accent }: {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div className={`px-4 py-3.5 border-b border-sidebar-border transition-colors hover:bg-sidebar-accent/50 ${accent ? "bg-sidebar-accent/30" : ""}`}>
+        <div
+          className="px-4 py-3.5 transition-colors cursor-default"
+          style={{
+            borderBottom: "1px solid rgba(34,197,94,0.1)",
+            background: accent ? "rgba(34,197,94,0.06)" : "transparent",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.background = accent
+              ? "rgba(34,197,94,0.1)"
+              : "rgba(34,197,94,0.04)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.background = accent
+              ? "rgba(34,197,94,0.06)"
+              : "transparent";
+          }}
+        >
           <div className="flex items-center gap-2 mb-1.5">
-            <div className={`h-5 w-5 rounded flex items-center justify-center ${accent ? "bg-primary/20" : "bg-sidebar-accent"}`}>
-              <Icon className={`h-3 w-3 ${accent ? "text-primary-300" : "text-sidebar-muted"}`} />
+            <div
+              className="h-5 w-5 rounded flex items-center justify-center flex-shrink-0"
+              style={{
+                background: accent ? "rgba(34,197,94,0.2)" : "rgba(34,197,94,0.08)",
+              }}
+            >
+              <Icon
+                className="h-3 w-3"
+                style={{ color: accent ? "#4ade80" : "rgba(148,163,184,0.8)" }}
+              />
             </div>
-            <span className="kpi-label text-sidebar-muted">{label}</span>
+            <span className="kpi-label" style={{ color: "rgba(148,163,184,0.8)" }}>{label}</span>
           </div>
-          <div className={`kpi-value text-sidebar-primary number-animate ${colorClass || ""}`}>{value}</div>
+          <div
+            className={`kpi-value number-animate ${colorClass || ""}`}
+            style={{ color: colorClass ? undefined : "#e2e8f0" }}
+          >
+            {value}
+          </div>
         </div>
       </TooltipTrigger>
       <TooltipContent side="right" className="max-w-[220px] text-xs">
@@ -47,11 +75,32 @@ export function KpiSidebar({ kpis, settings, timeScale, dureeMois }: KpiSidebarP
   const suffix = getTimeScaleSuffix(timeScale);
 
   return (
-    <aside className="w-[220px] sidebar-gradient flex-shrink-0 flex flex-col sticky top-0 h-screen overflow-y-auto">
-      <div className="px-4 py-4 border-b border-sidebar-border">
+    <aside
+      className="w-[220px] flex-shrink-0 flex flex-col sticky top-0 h-screen overflow-y-auto"
+      style={{
+        background: "linear-gradient(180deg, #182B16, #0d1a0c)",
+        borderLeft: "1px solid rgba(34,197,94,0.12)",
+      }}
+    >
+      {/* Header */}
+      <div
+        className="px-4 py-4"
+        style={{ borderBottom: "1px solid rgba(34,197,94,0.12)" }}
+      >
         <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <h2 className="text-xs font-semibold text-sidebar-foreground tracking-widest uppercase">Live KPIs</h2>
+          <div
+            className="h-2 w-2 rounded-full"
+            style={{
+              background: "#22c55e",
+              animation: "pulse-green 2s ease-in-out infinite",
+            }}
+          />
+          <h2
+            className="text-xs font-semibold tracking-widest uppercase"
+            style={{ color: "rgba(74,222,128,0.9)", fontFamily: "var(--font-display)" }}
+          >
+            Live KPIs
+          </h2>
         </div>
       </div>
 
@@ -111,8 +160,16 @@ export function KpiSidebar({ kpis, settings, timeScale, dureeMois }: KpiSidebarP
 
       {settings.margeDetaillee && (
         <>
-          <div className="px-4 py-2 border-b border-sidebar-border">
-            <div className="text-[9px] text-sidebar-muted uppercase tracking-widest">Marges par categorie</div>
+          <div
+            className="px-4 py-2"
+            style={{ borderBottom: "1px solid rgba(34,197,94,0.1)" }}
+          >
+            <div
+              className="text-[9px] uppercase tracking-widest"
+              style={{ color: "rgba(148,163,184,0.6)" }}
+            >
+              Marges par catégorie
+            </div>
           </div>
           <KpiItem
             label="Marge MO"
@@ -136,18 +193,25 @@ export function KpiSidebar({ kpis, settings, timeScale, dureeMois }: KpiSidebarP
             colorClass={getMarginColor(-kpis.margeSousTraitancePct, -settings.margeCibleSousTraitance, -settings.margeCibleSousTraitance * 2)}
           />
           <KpiItem
-            label="Marge matiere"
+            label="Marge matière"
             value={formatPercentage(kpis.margeMatierePct)}
             icon={Layers}
-            tooltip={`Marge sur matiere premiere. Cible: ${settings.margeCibleMatiere}%`}
+            tooltip={`Marge sur matière première. Cible: ${settings.margeCibleMatiere}%`}
             colorClass={getMarginColor(kpis.margeMatierePct, settings.margeCibleMatiere, settings.margeCibleMatiere * 0.5)}
           />
         </>
       )}
 
-      {/* Bottom decorative element */}
-      <div className="mt-auto px-4 py-4 border-t border-sidebar-border">
-        <div className="text-[9px] text-sidebar-muted uppercase tracking-widest">Mis à jour en temps réel</div>
+      <div
+        className="mt-auto px-4 py-4"
+        style={{ borderTop: "1px solid rgba(34,197,94,0.12)" }}
+      >
+        <div
+          className="text-[9px] uppercase tracking-widest"
+          style={{ color: "rgba(34,197,94,0.5)" }}
+        >
+          Mis à jour en temps réel
+        </div>
       </div>
     </aside>
   );
