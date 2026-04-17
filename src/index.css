@@ -6,34 +6,34 @@
 
 @layer base {
   :root {
-    /* === Fond global dark teinté vert === */
-    --background: 175 15% 2%;       /* #040505 */
-    --foreground: 0 0% 90%;
+    /* === Fond global clair === */
+    --background: 220 20% 97%;
+    --foreground: 220 15% 12%;
 
-    --card: 150 14% 4%;             /* #0a0f0b */
-    --card-foreground: 0 0% 88%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 12%;
 
-    --popover: 150 14% 5%;
-    --popover-foreground: 0 0% 88%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 12%;
 
     /* Vert primaire #22c55e */
     --primary: 142 71% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 125 20% 10%;
-    --secondary-foreground: 0 0% 80%;
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 220 15% 20%;
 
-    --muted: 150 12% 8%;
-    --muted-foreground: 215 16% 57%;  /* #94a3b8 */
+    --muted: 220 12% 92%;
+    --muted-foreground: 220 8% 46%;
 
-    --accent: 125 20% 10%;
-    --accent-foreground: 142 69% 58%;  /* #4ade80 */
+    --accent: 142 30% 93%;
+    --accent-foreground: 142 71% 35%;
 
-    --destructive: 0 93% 71%;          /* #f87171 */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 142 71% 45%;
-    --input: 150 14% 8%;
+    --border: 220 15% 88%;
+    --input: 220 15% 86%;
     --ring: 142 71% 45%;
 
     --radius: 0.75rem;
@@ -48,15 +48,15 @@
     /* Semantic */
     --profit: 142 71% 45%;
     --profit-foreground: 0 0% 100%;
-    --profit-muted: 142 30% 10%;
+    --profit-muted: 142 30% 93%;
 
-    --warning: 45 96% 57%;           /* #fcd34d */
+    --warning: 38 92% 50%;
     --warning-foreground: 0 0% 8%;
-    --warning-muted: 45 40% 12%;
+    --warning-muted: 38 40% 93%;
 
-    --loss: 0 93% 71%;               /* #f87171 */
+    --loss: 0 84% 60%;
     --loss-foreground: 0 0% 100%;
-    --loss-muted: 0 40% 12%;
+    --loss-muted: 0 40% 94%;
 
     /* Sidebar / CRM dark green */
     --sidebar-background: 114 37% 5%;
@@ -125,14 +125,9 @@
     @apply border-border;
   }
 
-  html {
-    color-scheme: dark;
-  }
-
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
-    background-color: hsl(175, 15%, 2%);
   }
 
   .font-mono {

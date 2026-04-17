@@ -40,27 +40,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden" style={{ background: "hsl(175, 15%, 2%)" }}>
-
-      {/* Ambient orbs — hidden on mobile */}
-      <div
-        className="hidden md:block fixed pointer-events-none blur-[120px] z-0 rounded-full"
-        style={{
-          width: 384, height: 384,
-          left: "8rem", top: "33%",
-          background: "radial-gradient(circle, rgba(22,163,74,0.18) 0%, transparent 70%)",
-          animation: "orb-drift 11s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="hidden md:block fixed pointer-events-none blur-[120px] z-0 rounded-full"
-        style={{
-          width: 384, height: 384,
-          right: "8rem", bottom: "25%",
-          background: "radial-gradient(circle, rgba(22,163,74,0.14) 0%, transparent 70%)",
-          animation: "orb-drift-reverse 13s ease-in-out infinite",
-        }}
-      />
+    <div className="flex flex-col h-screen overflow-hidden bg-background">
 
       <AppHeader
         kpis={sim.kpis}
@@ -74,19 +54,12 @@ const Index = () => {
       />
       <LeadMagnetBanner />
 
-      <div className="flex flex-1 overflow-hidden relative z-10">
+      <div className="flex flex-1 overflow-hidden">
         <main className="flex-1 overflow-hidden flex flex-col">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
 
             {/* Tab navigation strip */}
-            <div
-              className="px-4 lg:px-6 flex-shrink-0"
-              style={{
-                background: "rgba(24,43,22,0.6)",
-                backdropFilter: "blur(8px)",
-                borderBottom: "1px solid rgba(34,197,94,0.12)",
-              }}
-            >
+            <div className="px-4 lg:px-6 flex-shrink-0 border-b bg-card shadow-sm">
               <TabsList
                 className="h-11 bg-transparent p-0 gap-0.5"
               >
@@ -97,15 +70,15 @@ const Index = () => {
                     className="
                       custom-tab relative h-11 rounded-none px-4 gap-2 text-[13px] font-medium
                       border-b-2 border-transparent
-                      text-white/40 hover:text-white/80
-                      data-[state=active]:border-green-500 data-[state=active]:text-green-400
+                      text-muted-foreground hover:text-foreground
+                      data-[state=active]:border-primary data-[state=active]:text-primary
                       data-[state=active]:bg-transparent data-[state=active]:shadow-none
                       transition-colors duration-150
                     "
                   >
                     <tab.icon
                       className="h-3.5 w-3.5"
-                      style={{ color: activeTab === tab.id ? "#4ade80" : undefined }}
+                      style={{ color: activeTab === tab.id ? "#16a34a" : undefined }}
                     />
                     <span className="hidden sm:inline">{tab.label}</span>
                   </TabsTrigger>
